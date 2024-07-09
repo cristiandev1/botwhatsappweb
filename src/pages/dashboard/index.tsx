@@ -7,6 +7,7 @@ interface Conversation {
   id: number;
   user: string;
   lastMessage: string;
+  lastMessageTime: string;
 }
 
 const Index: React.FC = () => {
@@ -28,8 +29,8 @@ const Index: React.FC = () => {
 
   const fetchConversations = async () => {
     const fetchedConversations: Conversation[] = [
-      { id: 1, user: 'Pedro Rangel', lastMessage: 'Olá, como vai voce?' },
-      { id: 2, user: 'Bruna Cardoso', lastMessage: 'Oi, voces sao da clinica x ?' },
+      { id: 1, user: 'Pedro Rangel', lastMessage: 'Olá, como vai voce?', lastMessageTime: '12:00' },
+      { id: 2, user: 'Bruna Cardoso', lastMessage: 'Oi, voces sao da clinica x ?', lastMessageTime: '12:00' },
     ];
     setConversations(fetchedConversations);
   };

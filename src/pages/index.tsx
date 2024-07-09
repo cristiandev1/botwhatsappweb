@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { FaWhatsapp } from 'react-icons/fa';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
@@ -14,7 +14,7 @@ export default function Home() {
   const [timeLeft, setTimeLeft] = useState(50);
 
   useEffect(() => {
-    let timer;
+    let timer: NodeJS.Timeout;
     if (qrCode) {
       timer = setInterval(() => {
         setTimeLeft((prev) => {
@@ -62,10 +62,9 @@ export default function Home() {
     }
   };
 
-
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
-    value = value.replace(/\D/g, ''); // Remove non-numeric characters
+    value = value.replace(/\D/g, '');
     if (value.length <= 13) {
       setPhoneNumber(value);
     }
@@ -87,9 +86,7 @@ export default function Home() {
 
       if (response.ok) {
         localStorage.setItem('jwtToken', data.token);
-        alert('Redirecionar para dashboard');
-        console.log(data.token);
-        //router.push('/dashboard');
+        router.push('/dashboard');
       } else {
         alert(data.message || 'Erro na verificação');
       }
@@ -104,19 +101,19 @@ export default function Home() {
     <div className="flex items-center justify-center min-h-screen bg-gray-900">
       <div className="bg-gray-800 p-8 rounded-lg shadow-lg flex max-w-4xl w-full text-white">
         <div className="flex flex-col justify-center items-center w-1/2 border-r border-gray-700 p-4">
-          <FaWhatsapp className="text-green-500 mb-4" size={60} />
+          <FaWhatsapp className="text-green-600 mb-4" size={60} />
           <h1 className="text-3xl font-semibold mb-4">Bem-vindo!</h1>
           <input
             type="text"
             value={phoneNumber}
             onChange={handlePhoneNumberChange}
             placeholder="Exemplo: 554599999999"
-            className="mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 w-full text-black"
+            className="mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 w-full text-black"
           />
           <button
             onClick={fetchQrCode}
             disabled={phoneNumber.length !== 13 || loading}
-            className={`px-6 py-2 rounded-lg text-white w-full flex items-center justify-center ${loading ? 'bg-gray-400' : 'bg-green-500 hover:bg-green-600'}`}
+            className={`px-6 py-2 rounded-lg text-white w-full flex items-center justify-center ${loading ? 'bg-gray-400' : 'bg-green-600 hover:bg-green-700'}`}
           >
             {loading ? <AiOutlineLoading3Quarters className="animate-spin" size={24} /> : 'Obter QR Code'}
           </button>
@@ -124,7 +121,7 @@ export default function Home() {
         <div className="flex flex-col justify-center items-center w-1/2 p-4">
           {loading && (
             <div className="flex flex-col items-center justify-center mt-4">
-              <AiOutlineLoading3Quarters className="animate-spin text-green-500" size={40} />
+              <AiOutlineLoading3Quarters className="animate-spin text-green-600" size={40} />
               <h1 className="text-lg font-semibold mt-2">Aguardando QR Code...</h1>
             </div>
           )}
@@ -136,7 +133,7 @@ export default function Home() {
               <button
                 onClick={handleVerify}
                 disabled={verifying}
-                className="mt-4 px-6 py-2 rounded-lg text-white bg-green-500 hover:bg-green-600 flex items-center justify-center"
+                className="mt-4 px-6 py-2 rounded-lg text-white bg-green-600 hover:bg-green-600 flex items-center justify-center"
               >
                 {verifying ? <AiOutlineLoading3Quarters className="animate-spin" size={24} /> : 'Já li o QR Code'}
               </button>
